@@ -21,7 +21,7 @@
             <textarea name="synopsis" placeholder="A synopsis of film">{{film.synopsis}}</textarea>
         </div>
         <p>
-            <button class="ui button" onclick="location.href='/film/{{film.id}}'; return false;">Cancel</button>        //BUG href deberia ser = /films/{{id}}
+            <button class="ui button" onclick="location.href='/films/{{film.id}}'; return false;">Cancel</button>
             <input class="ui button orange" type="submit" id="Save" value="Save" />
         </p>
     </form>
