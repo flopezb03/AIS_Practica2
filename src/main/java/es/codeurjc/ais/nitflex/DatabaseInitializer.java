@@ -1,6 +1,5 @@
 package es.codeurjc.ais.nitflex;
 
-import es.codeurjc.ais.nitflex.notification.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

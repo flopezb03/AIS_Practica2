@@ -21,8 +21,8 @@ import es.codeurjc.ais.nitflex.film.FilmService;
 public class FilmWebController {
 
 	private FilmService filmService;
-	private static final String filmsString = "films";
-	private static final String messageString = "message";
+	private static final String FILMS_STRING = "films";
+	private static final String MESSAGE_STRING = "message";
 
 	@Autowired
 	public FilmWebController(FilmService filmService){
@@ -32,9 +32,9 @@ public class FilmWebController {
 	@GetMapping("/")
 	public String showFilms(Model model) {
 
-		model.addAttribute(filmsString, filmService.findAll());
+		model.addAttribute(FILMS_STRING, filmService.findAll());
 		
-		return filmsString;
+		return FILMS_STRING;
 	}
 	
 	@GetMapping("/films/{id}")
@@ -46,7 +46,7 @@ public class FilmWebController {
 			model.addAttribute("film", film);
 			return "film";
 		}else {
-			return filmsString;
+			return FILMS_STRING;
 		}
 		
 	}
@@ -59,8 +59,8 @@ public class FilmWebController {
 			filmService.delete(id);
 			Film removedFilm = op.get();
 			model.addAttribute("error", false);
-			model.addAttribute(messageString, "Film '"+removedFilm.getTitle()+"' deleted");
-			return messageString;
+			model.addAttribute(MESSAGE_STRING, "Film '"+removedFilm.getTitle()+"' deleted");
+			return MESSAGE_STRING;
 		}else {
 			return "redirect:/";
 		}
@@ -89,7 +89,7 @@ public class FilmWebController {
 			model.addAttribute("film", film);
 			return "editFilmPage";
 		}else {
-			return filmsString;
+			return FILMS_STRING;
 		}
 		
 	}
@@ -109,15 +109,15 @@ public class FilmWebController {
 	@ExceptionHandler({ResponseStatusException.class, BindException.class})
     public ModelAndView handleException(Exception ex){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(messageString);
+        modelAndView.setViewName(MESSAGE_STRING);
 		modelAndView.addObject("error", true);
 
 		if(ex instanceof ResponseStatusException resExp){
-			modelAndView.addObject(messageString, resExp.getReason());
+			modelAndView.addObject(MESSAGE_STRING, resExp.getReason());
 		}else if(ex instanceof BindException){
-			modelAndView.addObject(messageString, "Field 'year' must be a number");
+			modelAndView.addObject(MESSAGE_STRING, "Field 'year' must be a number");
 		}else{
-			modelAndView.addObject(messageString, ex.getMessage());
+			modelAndView.addObject(MESSAGE_STRING, ex.getMessage());
 		}
 
         return modelAndView;
