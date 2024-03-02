@@ -16,20 +16,25 @@ import org.springframework.web.servlet.ModelAndView;
 import es.codeurjc.ais.nitflex.film.Film;
 import es.codeurjc.ais.nitflex.film.FilmService;
 
-import es.codeurjc.ais.nitflex.DatabaseInitializer;
 
 @Controller
 public class FilmWebController {
 
-	@Autowired
 	private FilmService filmService;
+	private static final String filmsString = "films";
+	private static final String messageString = "message";
+
+	@Autowired
+	public FilmWebController(FilmService filmService){
+		this.filmService = filmService;
+	}
 	
 	@GetMapping("/")
 	public String showFilms(Model model) {
 
-		model.addAttribute("films", filmService.findAll());
+		model.addAttribute(filmsString, filmService.findAll());
 		
-		return "films";
+		return filmsString;
 	}
 	
 	@GetMapping("/films/{id}")
@@ -41,7 +46,7 @@ public class FilmWebController {
 			model.addAttribute("film", film);
 			return "film";
 		}else {
-			return "films";
+			return filmsString;
 		}
 		
 	}
@@ -54,8 +59,8 @@ public class FilmWebController {
 			filmService.delete(id);
 			Film removedFilm = op.get();
 			model.addAttribute("error", false);
-			model.addAttribute("message", "Film '"+removedFilm.getTitle()+"' deleted");
-			return "message";
+			model.addAttribute(messageString, "Film '"+removedFilm.getTitle()+"' deleted");
+			return messageString;
 		}else {
 			return "redirect:/";
 		}
@@ -84,7 +89,7 @@ public class FilmWebController {
 			model.addAttribute("film", film);
 			return "editFilmPage";
 		}else {
-			return "films";
+			return filmsString;
 		}
 		
 	}
@@ -104,16 +109,15 @@ public class FilmWebController {
 	@ExceptionHandler({ResponseStatusException.class, BindException.class})
     public ModelAndView handleException(Exception ex){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("message");
+        modelAndView.setViewName(messageString);
 		modelAndView.addObject("error", true);
 
-		if(ex instanceof ResponseStatusException){
-			ResponseStatusException resExp = (ResponseStatusException) ex;
-			modelAndView.addObject("message", resExp.getReason());
+		if(ex instanceof ResponseStatusException resExp){
+			modelAndView.addObject(messageString, resExp.getReason());
 		}else if(ex instanceof BindException){
-			modelAndView.addObject("message", "Field 'year' must be a number");
+			modelAndView.addObject(messageString, "Field 'year' must be a number");
 		}else{
-			modelAndView.addObject("message", ex.getMessage());
+			modelAndView.addObject(messageString, ex.getMessage());
 		}
 
         return modelAndView;

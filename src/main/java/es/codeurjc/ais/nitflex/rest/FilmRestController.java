@@ -24,8 +24,12 @@ import es.codeurjc.ais.nitflex.film.FilmService;
 @RequestMapping("/api/films")
 public class FilmRestController {
 
-	@Autowired
 	private FilmService filmfilmService;
+
+	@Autowired
+	public FilmRestController(FilmService filmfilmService){
+		this.filmfilmService = filmfilmService;
+	}
 
 	@GetMapping("/")
 	public Collection<Film> getFilms() {

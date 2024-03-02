@@ -1,5 +1,8 @@
 package es.codeurjc.ais.nitflex;
 
+import es.codeurjc.ais.nitflex.notification.NotificationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +13,17 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class DatabaseInitializer {
 
-	@Autowired
-	private FilmRepository filmRepository;
 
+	private FilmRepository filmRepository;
+	Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
+
+	@Autowired
+	public DatabaseInitializer(FilmRepository filmRepository){
+		this.filmRepository = filmRepository;
+	}
 	@PostConstruct
 	public void init() {
+
 
 		// Sample films
 
@@ -29,10 +38,10 @@ public class DatabaseInitializer {
 	private boolean isTestingEnviroment(){
 		try {
             Class.forName("org.junit.jupiter.api.Test");
-			System.out.println("TEST ENV");
+			logger.info("TEST ENV");
 			return true;
         } catch (ClassNotFoundException e) {
-			System.out.println("PRODUCTION ENV");
+			logger.info("PRODUCTION ENV");
             return false;
         }
 	}

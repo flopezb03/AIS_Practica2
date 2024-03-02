@@ -14,7 +14,6 @@ public class UrlUtils {
 
     public void checkValidImageURL(String candidateURL){
 
-        String otherUrl;
         
         // CHECK THAT URL HAS VALID FORMAT
         URL url;
@@ -22,7 +21,6 @@ public class UrlUtils {
             url = new URL(candidateURL);
         } catch ( MalformedURLException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The url format is not valid");
-            //System.out.println("The url format is not valid");
         }
 
         // CHECK THAT THE URL IS AN IMAGE

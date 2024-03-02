@@ -39,7 +39,7 @@ public class FilmService {
 	}
 
 	public Film save(Film film) {
-		if (film.getTitle() == "") {
+		if (film.getTitle().equals("")) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title is empty");
 		}
 		urlUtils.checkValidImageURL(film.getUrl());
