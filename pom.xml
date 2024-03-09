@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.codeurjc.ais</groupId>
-	<artifactId>practica_2_testing</artifactId>
+	<artifactId>ais_practica_2</artifactId>
 	<version>0.1.0</version>
 
 	<parent>
@@ -73,11 +73,11 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
+	<pluginManagement>
+	<plugins>
+	<plugin>
+	<groupId>org.jacoco</groupId>
+	<artifactId>jacoco-maven-plugin</artifactId>
 	<version>0.8.11</version>
 	</plugin>
 	</plugins>
