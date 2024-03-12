@@ -21,7 +21,7 @@ import es.codeurjc.ais.nitflex.film.FilmService;
 public class FilmWebController {
 
 	private FilmService filmService;
-	private static final String FILMS_STRING = "films";
+
 	private static final String MESSAGE_STRING = "message";
 
 	@Autowired
@@ -32,9 +32,9 @@ public class FilmWebController {
 	@GetMapping("/")
 	public String showFilms(Model model) {
 
-		model.addAttribute(FILMS_STRING, filmService.findAll());
+		model.addAttribute("films", filmService.findAll());
 		
-		return FILMS_STRING;
+		return "films";
 	}
 	
 	@GetMapping("/films/{id}")
@@ -46,7 +46,7 @@ public class FilmWebController {
 			model.addAttribute("film", film);
 			return "film";
 		}else {
-			return FILMS_STRING;
+			return "films";
 		}
 		
 	}
@@ -89,7 +89,7 @@ public class FilmWebController {
 			model.addAttribute("film", film);
 			return "editFilmPage";
 		}else {
-			return FILMS_STRING;
+			return "films";
 		}
 		
 	}
