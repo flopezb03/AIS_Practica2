@@ -21,9 +21,6 @@ import es.codeurjc.ais.nitflex.film.FilmService;
 public class FilmWebController {
 
 	private FilmService filmService;
-
-	private static final String MESSAGE_STRING = "message";
-
 	@Autowired
 	public FilmWebController(FilmService filmService){
 		this.filmService = filmService;
@@ -59,8 +56,8 @@ public class FilmWebController {
 			filmService.delete(id);
 			Film removedFilm = op.get();
 			model.addAttribute("error", false);
-			model.addAttribute(MESSAGE_STRING, "Film '"+removedFilm.getTitle()+"' deleted");
-			return MESSAGE_STRING;
+			model.addAttribute("message", "Film '"+removedFilm.getTitle()+"' deleted");
+			return "message";
 		}else {
 			return "redirect:/";
 		}
@@ -68,7 +65,7 @@ public class FilmWebController {
 	}
 	
 	@GetMapping("/newfilm")
-	public String newFilm(Model model) {
+	public String newFilm() {
 		return "newFilmPage";
 	}
 	
@@ -109,15 +106,15 @@ public class FilmWebController {
 	@ExceptionHandler({ResponseStatusException.class, BindException.class})
     public ModelAndView handleException(Exception ex){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(MESSAGE_STRING);
+        modelAndView.setViewName("message");
 		modelAndView.addObject("error", true);
 
 		if(ex instanceof ResponseStatusException resExp){
-			modelAndView.addObject(MESSAGE_STRING, resExp.getReason());
+			modelAndView.addObject("message", resExp.getReason());
 		}else if(ex instanceof BindException){
-			modelAndView.addObject(MESSAGE_STRING, "Field 'year' must be a number");
+			modelAndView.addObject("message", "Field 'year' must be a number");
 		}else{
-			modelAndView.addObject(MESSAGE_STRING, ex.getMessage());
+			modelAndView.addObject("message", ex.getMessage());
 		}
 
         return modelAndView;
